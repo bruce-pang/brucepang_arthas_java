@@ -1,7 +1,7 @@
 package com.brucepang.charpter1_linklist.level1;
 
 /**
- *  一个简单的链表实例，用于演示JVM怎么构造链表的(基于BasicLink0使用for循环改造单链表)
+ *  一个简单的链表实例，用于演示JVM怎么构造链表的(基于BasicLink2,将单链表更新为双向链表)
  *  BrucePang
  */
 public class BasicLink2 {
@@ -26,8 +26,10 @@ public class BasicLink2 {
                 cur = new Node(arr[i]);
                 head = cur; // 头节点赋值,有且只赋值一次
             } else {
-                cur.next = new Node(arr[i]); // 新一轮的for循环开始时,首先将上一轮的Node节点的next指向新的Node节点
-                cur = cur.next; // 然后将cur节点更新当前for循环的Node节点
+                Node pre = cur; // 上一轮节点的引用保存到临时变量中
+                cur.next = new Node(arr[i]); // 此处引用还是上一轮的节点: 新一轮的for循环开始时,首先将上一轮的Node节点的next指向新的Node节点
+                cur = cur.next; // 然后将cur节点引用更新为当前for循环的Node节点
+                cur.pre = pre; // 将上一轮节点的引用赋值给当前节点的pre属性
             }
 
         }
@@ -38,9 +40,12 @@ public class BasicLink2 {
         int val; // 节点的值
         Node next; // 下一个节点的引用
 
+        Node pre; // 上一个节点的引用
+
         public Node(int val){
             this.val = val;
-            next = null;
+            next = null; // 为了方便理解最后一个节点的next指向null,所以这里初始化为null
+            pre = null; // 为了方便理解最后一个节点的pre指向null,所以这里初始化为null
         }
     }
 }
