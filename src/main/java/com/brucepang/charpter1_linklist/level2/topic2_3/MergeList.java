@@ -16,7 +16,12 @@ public class MergeList {
         int[] b = {2, 5, 9, 13, 15, 17, 19};
         ListNode nodeB = initLinkedList(b);
 
-        int testMethod = 2;
+        int[] c = {3, 6, 10, 14};
+        ListNode nodeC = initLinkedList(c);
+
+        ListNode[] array = {nodeA, nodeB, nodeC};
+
+        int testMethod = 3;
         ListNode d = null;
         switch (testMethod) {
             case 1: // 方法1：最直接的方法
@@ -25,6 +30,10 @@ public class MergeList {
                 break;
             case 2: // 方法1：最直接的方法
                 d = mergeTwoListsTwo(nodeA, nodeB);
+                System.out.println(toString(d));
+                break;
+            case 3: // 合并K个有序链表
+                d = mergeKLists(array);
                 System.out.println(toString(d));
                 break;
         }
@@ -44,6 +53,19 @@ public class MergeList {
             d = d.next;  // 链表后移
         }
         return sb.toString();
+    }
+
+    /**
+     * 合并K个有序链表
+     * @param lists  有序链表数组
+     * @return
+     */
+    public static ListNode mergeKLists(ListNode[] lists) {
+        ListNode res = null;
+        for (ListNode list : lists) {
+            res = mergeTwoListsTwo(res, list);
+        }
+        return res;
     }
 
     /**
