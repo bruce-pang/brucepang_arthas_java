@@ -21,7 +21,7 @@ public class MergeList {
 
         ListNode[] array = {nodeA, nodeB, nodeC};
 
-        int testMethod = 3;
+        int testMethod = 4;
         ListNode d = null;
         switch (testMethod) {
             case 1: // 方法1：最直接的方法
@@ -34,6 +34,10 @@ public class MergeList {
                 break;
             case 3: // 合并K个有序链表
                 d = mergeKLists(array);
+                System.out.println(toString(d));
+                break;
+            case 4: // 合并list2到list1的a到b位置
+                d = mergeInBetween(nodeA, 2, 60, nodeB);
                 System.out.println(toString(d));
                 break;
         }
@@ -93,6 +97,66 @@ public class MergeList {
         newNode.next = list1 == null ? list2 : list1;
         return res.next; // 返回合并后的链表部分
     }
+
+
+    /**
+     * 合并list2到list1的a到b位置
+     * @param list1
+     * @param a
+     * @param b
+     * @param list2
+     * @return
+     */
+    public static ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2){
+        ListNode pre = list1,  // pre用于帮助找到list1的a位置
+                post1 = list1, // post1用于帮助找到list1的b位置
+                post2 = list2; // post2用于帮助找到list2的最后一个节点的位置
+        int i = 0, j = 0; // i 用于跟踪 pre 的位置。j 用于跟踪 post1 的位置, 必须从0开始，否则会造成b位置的元素不被截取掉。
+        while(pre != null && post1 != null && j < b){
+          if(i < a - 1){ // 找到a前一个节点的位置
+                pre = pre.next;
+                i++;
+          }
+          if (j != b){ // 找到b的位置
+                post1 = post1.next;
+                j++;
+          }
+        }
+
+        while (post2.next != null){ // 找到list2的最后一个节点
+            post2 = post2.next;
+        }
+
+        // 将a节点前一个节点的next指向list2的头节点，将list2的最后一个节点的next指向b节点的下一个节点
+        pre.next = list2;
+        post2.next = post1 == null ? null : post1.next; // 谨防空指针异常
+
+        return list1;
+    }
+
+/*    public static ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
+        ListNode pre1 = list1, post1 = list1, post2 = list2;
+        int i = 0, j = 0;
+        while(pre1 != null && post1 != null && j < b){
+            if(i != a - 1){
+                pre1 = pre1.next;
+                i++;
+            }
+            if(j != b){
+                post1 = post1.next;
+                j++;
+            }
+        }
+        post1 = post1.next;
+        //寻找list2的尾节点
+        while(post2.next != null){
+            post2 = post2.next;
+        }
+        //链1尾接链2头，链2尾接链1后半部分的头
+        pre1.next = list2;
+        post2.next = post1;
+        return list1;
+    }*/
 
 
     /**
