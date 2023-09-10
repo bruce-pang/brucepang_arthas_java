@@ -1,4 +1,4 @@
-package com.brucepang.charpter1_linklist.topic2_4;
+package com.brucepang.charpter1_linklist.level2.topic2_4;
 
 import com.brucepang.charpter1_linklist.level2.ListNode;
 
