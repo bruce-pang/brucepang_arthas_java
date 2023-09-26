@@ -12,7 +12,34 @@ public class ReverseList {
     public static void main(String[] args) {
         int[] a = {1,2,3,4,5};
         ListNode listNode = initLinkedList(a);
-        System.out.println(toString(reverseList(listNode)));
+
+        int testMethod = 2;
+        switch (testMethod){
+            case 1:
+                System.out.println(toString(reverseListByDummyNote(listNode)));
+                break;
+            case 2:
+                System.out.println(toString(reverseListByNoDummyNode(listNode)));
+                break;
+        }
+
+    }
+
+    /**
+     * 方法二：直接操作链表实现反转
+     * @param head
+     * @return
+     */
+    public static ListNode reverseListByNoDummyNode(ListNode head){
+        ListNode cur = head;
+        ListNode prev = null;
+        while (cur != null){
+            ListNode next = cur.next; // 下一个要被操作的节点
+            cur.next = prev; // 当前结点的next指向prev
+            prev = cur; // 更新prev
+            cur = next; // 移动到新节点
+        }
+        return prev;
     }
 
     /**
@@ -20,7 +47,7 @@ public class ReverseList {
      * @param head 链表
      * @return 反转后的链表
      */
-    public static ListNode reverseList(ListNode head) {
+    public static ListNode reverseListByDummyNote(ListNode head) {
         // 1.定义虚拟头结点
         ListNode ans = new ListNode(-1);
         ListNode cur = head;
